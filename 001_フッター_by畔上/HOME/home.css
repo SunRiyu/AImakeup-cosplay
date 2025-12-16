@@ -1,0 +1,115 @@
+body{
+ background-color: hsl(0, 0%, 100%);
+}
+
+
+.logo{
+  font-family: 'Yu Gothic', sans-serif;
+}
+
+.button-container {
+  display: flex; /* 子要素を横並びにする */
+  justify-content: center;/* 中央寄せしたい場合 */
+  gap: 250px; /* ボタン間のスペース */
+}
+
+/*フッター*/
+
+footer {
+  background-color: hsl(113, 100%, 75%);
+  bottom: 0;
+  width: 100%;
+  display: flex; /* 子要素を横並びにする */
+}
+
+.main-content {
+    /* ヘッダーの高さ分、上部にマージンを設定して押し下げる */
+    margin-top: 100px; 
+}
+
+header {
+  position: fixed;/*画面上部に固定*/
+  list-style: none;
+  background-color: hsl(113, 100%, 75%);
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+  top : 0; 
+  width: 100%;
+  z-index: 1000; /* 他の要素の上に表示させる */
+  height: 100px;
+  font-family: 'Yu Gothic', sans-serif;
+  padding-right: 10px;
+  justify-content: center; /* 水平方向の中央寄せ */
+  align-items: center;    /* 垂直方向の中央寄せ */
+
+  height: 100px;
+}
+
+/* ドロップダウンメニュー全体のスタイル */
+.dropdown-menu ul{
+    list-style: none; /* リストの点（・）を消す */
+    margin: 0;/*要素の外側の余白*/
+    padding: 0;/*要素の内側の余白*/
+}
+
+/* メインメニューを横並びにする */
+.dropdown-menu > ul > li {
+  display: inline-block; 
+    text-align: center;
+}
+
+/* メニューのリンクの装飾 */
+.dropdown-menu a {
+    display: block; /* 領域全体をクリック可能に */
+    padding: 20px 25px;/*上下　左右*/
+    text-decoration: none; /* 下線を消す */
+    color: hsl(0, 0%, 24%);
+}
+
+
+.dropdown {
+    /* 普段は見えないようにする設定 */
+    visibility: hidden; /* または visibility: hidden; opacity: 0; もよく使われます */
+    opacity: 0;
+    /* アニメーション効果 */
+    /* ★追加ポイント1: 初期位置を少し上にずらす */
+    transform: translateY(-10px); /* Y軸方向に -10px (上) に移動 */
+    
+    /* ★追加ポイント2: transition に transform の変化も追加 */
+    transition: 
+        opacity 0.3s ease, 
+        visibility 0.3s ease, 
+        transform 0.3s ease; /* transform の変化も滑らかにする */
+    /* 常に上に表示させる設定 */
+    position: fixed; /*absolute ★重要: 親要素(.dropdown-menu > ul > li)を基準に配置 */
+    top: 100px; /* 親要素の真下に配置 */
+    right: 0;
+    
+    /* ドロップダウン自体の見た目 */
+    min-width: 100%;
+    background-color: hsl(113, 100%, 75%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影をつけて浮いているように見せる */
+    z-index: 1000; /* 他の要素の上に表示させる */
+}
+
+/* ドロップダウンの中のメニューは縦並びに戻す */
+.dropdown li {
+    display: block;
+}
+
+.dropdown a {
+    padding: 5px 25px;
+}
+
+
+/* 親メニューの li にマウスが乗ったら（:hover） */
+.dropdown-menu > ul > li:hover > .dropdown {
+    opacity: 1; /* 透明度を1（不透明）に戻す */
+    visibility: visible; /* 見えるようにする */ 
+    /* 隠していたドロップダウンを表示する */
+
+    /* ★追加ポイント: 移動した位置を元に戻す（0 に戻す） */
+    transform: translateY(0); /* Y軸方向の移動をリセット */
+}
+
