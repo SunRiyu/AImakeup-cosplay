@@ -342,8 +342,8 @@ header {
   padding-right: 10px;
   justify-content: center; /* 水平方向の中央寄せ */
   align-items: center;    /* 垂直方向の中央寄せ */
-
-  height: 100px;
+　padding: 10px 5% 10px 5%;/*上 右 下 左の余白*/
+  
 }
 
 /* ドロップダウンメニュー全体のスタイル */
