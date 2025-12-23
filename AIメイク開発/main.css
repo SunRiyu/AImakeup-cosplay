@@ -1,0 +1,540 @@
+body {
+    /* ページのコンテンツが少なくとも画面全体の高さになるように設定 */
+    min-height: 100vh; 
+    
+    /* Flexboxを使い、子要素（ヘッダー、メインコンテンツ、フッター）を縦に並べる */
+    display: flex;
+    flex-direction: column;
+    
+    /* 以前のCSSから残っている設定を統合し、最後に適用されるようにします */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: hsl(0, 0%, 100%); /* 最終的に適用される背景色 */
+    padding-bottom: 0; /* 以前の定義をリセット */
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+h1 {
+    color: #555;
+    margin: 0;
+}
+
+.home-link {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.2em;
+}
+
+.home-link a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.main-content-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* 固定ヘッダー (100px) の高さ分、下に押し下げる */
+    margin-top: 100px; 
+    /* 画面の高さいっぱいに広げるためにヘッダーの高さ (100px) を引く */
+    height: calc(100vh - 100px);
+    padding-left: 40px;
+    gap: 40px;
+}
+
+.cosplayer-image img {
+    width: 480px;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* テキストとボタンを縦に並べるためのコンテナ */
+.text-and-button {
+    flex-grow: 1;
+    /* 残りのスペースを全て占有 */
+    display: flex;
+    flex-direction: column;
+    /* 縦並びにする */
+    align-items: center;
+    /* 垂直方向の中央揃え */
+    gap: 30px;
+    /* テキストとボタンの間隔 */
+}
+
+.makeup-text {
+    font-size: 4em;
+    font-weight: bold;
+    color: #e91e63;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ボタンのスタイル */
+.edit-button a {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+.edit-button a:hover {
+    background-color: #0056b3;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+header {
+    text-align: center;
+    padding: 30px 0;
+    background-color: #e0f2f7; /* 明るい青系の背景 */
+    border-bottom: 2px solid #b3e5fc;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 3.5em; /* 大きな文字 */
+    color: #01579b; /* 濃い青色 */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: center; /* コンテンツ全体を中央寄せ */
+    gap: 50px; /* 画像と調整コントロールの間のスペース */
+    padding: 20px;
+}
+
+.image-section {
+    text-align: center; /* 画像とその上のテキストを中央寄せ */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.image-label {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.image-section img {
+    max-width: 500px; /* 画像の最大幅 */
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.adjustment-controls {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 350px; /* 調整コントロールの幅を固定 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直方向の中央揃え */
+    align-items: center; /* 水平方向の中央揃え */
+    gap: 20px;
+}
+
+.adjustment-controls p {
+    font-size: 1.1em;
+    color: #666;
+    text-align: center;
+}
+
+.adjustment-controls button {
+    padding: 12px 25px;
+    font-size: 1.2em;
+    background-color: #28a745; /* 緑系のボタン */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.adjustment-controls button:hover {
+    background-color: #218838;
+}
+/* ==================================== */
+/* 1. スタイル共通化 */
+/* ==================================== */
+ 
+/* プレビュー画像のスタイル */
+.preview-image { 
+    display: none; /* 初期状態では非表示 */
+    max-width: 100%; /* 親要素の幅に合わせて最大化 */
+    height: auto;
+    border: 1px solid #ccc;
+    margin-top: 15px;
+}
+
+/* ファイル選択ボタンの見た目を調整 */
+.upload-input { 
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* 共通のパネルスタイル */
+.panel {
+    flex: 1; /* 左右のパネルが同じ幅を占めるようにする */
+    min-height: 300px; /* 最小の高さを設定 */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 5px rgba(0, 86, 179, 0.2);
+    background-color: #ffffff;
+    /* パネル内部の要素を中央揃えに */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* ==================================== */
+/* 2. レイアウトとコンテナ */
+/* ==================================== */
+
+body {
+    background-color: #f4f4f4; /* 背景色を追加 */
+    font-family: Arial, sans-serif;
+    padding-bottom: 50px; /* ボタンのためのスペース */
+}
+
+/* メインコンテナ（ページ中央寄せのための核） */
+/* メインコンテナ（ページ中央寄せのための核） */
+#main-container {
+    width: 90%; 
+    max-width: 900px; 
+    /* 潜り込み解消のため、上マージンを 20px から 120px に修正 */
+    margin: 120px auto 20px auto; 
+    padding: 20px;
+    
+    /* 内部要素を縦方向に中央寄せ (タイトルとパネルラッパーを縦に並べる) */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    
+    border: 1px solid #eee; 
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white; /* コンテナの背景を白に */
+    /* flex-grow: 1; を追加し、縦方向の残りのスペースを全て占有させる */
+    flex-grow: 1;
+}
+
+/* 左右のパネルを横に並べるためのラッパー */
+#panel-wrapper {
+    display: flex;
+    flex-direction: row; /* 要素を横に並べる */
+    gap: 20px; /* パネル間の間隔 */
+    width: 100%; /* 親要素の幅を占有 */
+    margin-top: 20px;
+}
+
+/* ==================================== */
+/* 3. パネル固有のスタイル */
+/* ==================================== */
+
+/* 左パネルの背景色 */
+#leftPanel {
+    background-color: #f2fbff; /* 薄い水色 */
+}
+
+/* 右パネルの背景色 */
+#rightPanel {
+    background-color: #effff2; /* 薄い緑色 */
+}
+
+/* ==================================== */
+/* 4. 追加した「編集画面へ」ボタンのスタイル */
+/* ==================================== */
+
+.edit-button-wrapper {
+    text-align: center;
+    margin-top: 30px; /* メインコンテナとの間隔 */
+}
+
+.edit-button {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: #007bff; /* 青色のボタン */
+    color: white;
+    text-decoration: none; /* リンクの下線を消す */
+    font-size: 1.5em;
+    font-weight: bold;
+    border-radius: 30px; /* 角丸を強くする */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* ホバーで少し浮き上がる */
+}
+body{
+ background-color: hsl(0, 0%, 100%);
+}
+
+
+.logo{
+  font-family: 'Yu Gothic', sans-serif;
+}
+
+.button-container {
+  display: flex; /* 子要素を横並びにする */
+  justify-content: center;/* 中央寄せしたい場合 */
+  gap: 250px; /* ボタン間のスペース */
+}
+
+/*フッター*/
+
+footer {
+    background-color: hsl(113, 100%, 75%);
+    /* bottom: 0; を削除: position: static/relative の場合は不要です */
+    width: 100%;
+    display: flex;
+}
+
+.main-content {
+    /* ヘッダーの高さ分、上部にマージンを設定して押し下げる */
+    margin-top: 100px; 
+}
+
+header {
+  position: fixed;/*画面上部に固定*/
+  list-style: none;
+  background-color: hsl(113, 100%, 75%);
+  text-align: center;
+  justify-content: space-between;
+  display: flex;
+  top : 0; 
+  width: 100%;
+  z-index: 1000; /* 他の要素の上に表示させる */
+  height: 100px;
+  font-family: 'Yu Gothic', sans-serif;
+  padding-right: 10px;
+  justify-content: center; /* 水平方向の中央寄せ */
+  align-items: center;    /* 垂直方向の中央寄せ */
+
+  height: 100px;
+}
+
+/* ドロップダウンメニュー全体のスタイル */
+.dropdown-menu ul{
+    list-style: none; /* リストの点（・）を消す */
+    margin: 0;/*要素の外側の余白*/
+    padding: 0;/*要素の内側の余白*/
+}
+
+/* メインメニューを横並びにする */
+.dropdown-menu > ul > li {
+  display: inline-block; 
+    text-align: center;
+}
+
+/* メニューのリンクの装飾 */
+.dropdown-menu a {
+    display: block; /* 領域全体をクリック可能に */
+    padding: 20px 25px;/*上下　左右*/
+    text-decoration: none; /* 下線を消す */
+    color: hsl(0, 0%, 24%);
+}
+
+
+.dropdown {
+    /* 普段は見えないようにする設定 */
+    visibility: hidden; /* または visibility: hidden; opacity: 0; もよく使われます */
+    opacity: 0;
+    /* アニメーション効果 */
+    /* ★追加ポイント1: 初期位置を少し上にずらす */
+    transform: translateY(-10px); /* Y軸方向に -10px (上) に移動 */
+    
+    /* ★追加ポイント2: transition に transform の変化も追加 */
+    transition: 
+        opacity 0.3s ease, 
+        visibility 0.3s ease, 
+        transform 0.3s ease; /* transform の変化も滑らかにする */
+    /* 常に上に表示させる設定 */
+    position: fixed; /*absolute ★重要: 親要素(.dropdown-menu > ul > li)を基準に配置 */
+    top: 100px; /* 親要素の真下に配置 */
+    right: 0;
+    
+    /* ドロップダウン自体の見た目 */
+    min-width: 100%;
+    background-color: hsl(113, 100%, 75%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 影をつけて浮いているように見せる */
+    z-index: 1000; /* 他の要素の上に表示させる */
+}
+
+/* ドロップダウンの中のメニューは縦並びに戻す */
+.dropdown li {
+    display: block;
+}
+
+.dropdown a {
+    padding: 5px 25px;
+}
+
+
+/* 親メニューの li にマウスが乗ったら（:hover） */
+.dropdown-menu > ul > li:hover > .dropdown {
+    opacity: 1; /* 透明度を1（不透明）に戻す */
+    visibility: visible; /* 見えるようにする */ 
+    /* 隠していたドロップダウンを表示する */
+
+    /* ★追加ポイント: 移動した位置を元に戻す（0 に戻す） */
+    transform: translateY(0); /* Y軸方向の移動をリセット */
+}
+/* ==================================== */
+/* 0. 基本設定 (body) */
+/* ==================================== */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: hsl(0, 0%, 100%); 
+
+    /* Flexbox設定でフッターを最下部に固定 */
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+}
+
+.logo{
+  font-family: 'Yu Gothic', sans-serif;
+}
+
+/* ==================================== */
+/* 1. ヘッダー */
+/* ==================================== */
+header {
+    /* 固定ヘッダーの設定 */
+    position: fixed;
+    top : 0; 
+    width: 100%;
+    z-index: 1000; 
+    height: 100px; /* 固定の高さ */
+
+    /* デザイン */
+    background-color: hsl(113, 100%, 75%);
+    text-align: center;
+    justify-content: center; /* 水平方向の中央寄せ */
+    align-items: center;    /* 垂直方向の中央寄せ */
+    display: flex;
+    font-family: 'Yu Gothic', sans-serif;
+    padding-right: 10px;
+    list-style: none; /* ドロップダウンメニューのコンフリクト解消 */
+}
+
+/* ドロップダウンメニューのスタイル (変更なし) */
+.dropdown-menu ul{ list-style: none; margin: 0; padding: 0; }
+.dropdown-menu > ul > li { display: inline-block; text-align: center; }
+.dropdown-menu a { display: block; padding: 20px 25px; text-decoration: none; color: hsl(0, 0%, 24%); }
+.dropdown {
+    visibility: hidden; opacity: 0; transform: translateY(-10px); 
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease; 
+    position: fixed; top: 100px; right: 0;
+    min-width: 100%; background-color: hsl(113, 100%, 75%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); z-index: 1000; 
+}
+.dropdown li { display: block; }
+.dropdown a { padding: 5px 25px; }
+.dropdown-menu > ul > li:hover > .dropdown {
+    opacity: 1; visibility: visible; transform: translateY(0); 
+}
+
+/* ==================================== */
+/* 2. フッター */
+/* ==================================== */
+footer {
+    background-color: hsl(113, 100%, 75%);
+    width: 100%;
+    display: flex; 
+    /* bottom: 0; はposition: fixed/absoluteがないため削除 */
+}
+
+/* ==================================== */
+/* 3. メインコンテンツとレイアウト */
+/* ==================================== */
+
+/* home/CosplayMakeup.html のメインコンテンツ */
+.main-content-area {
+    /* Flexboxで残りの高さを占有し、フッターを下に押し下げる */
+    flex-grow: 1; 
+
+    /* ヘッダー固定による潜り込みを防ぐため、100pxマージンを追加 */
+    margin-top: 100px; 
+
+    /* 内部レイアウト */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: calc(100vh - 100px); /* 画面の高さいっぱいに広げる */
+    padding-left: 40px;
+    gap: 40px;
+}
+
+/* generate/generate.html のメインコンテンツ */
+#main-container {
+    /* Flexboxで残りの高さを占有し、フッターを下に押し下げる */
+    flex-grow: 1;
+    
+    /* ヘッダー固定による潜り込みを防ぐため、マージンを調整 */
+    margin: 120px auto 20px auto; 
+
+    width: 90%; 
+    max-width: 900px; 
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    border: 1px solid #eee; 
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white; 
+}
+
+/* edit/edit.html のメインコンテンツ (フッター fix の最重要修正) */
+.content-wrapper {
+    /* Flexboxで残りの高さを占有し、フッターを下に押し下げる */
+    flex-grow: 1;
+    
+    /* ヘッダー固定による潜り込みを防ぐための上部マージン */
+    margin-top: 100px; 
+
+    /* 内部レイアウト */
+    display: flex;
+    justify-content: center; 
+    gap: 50px; 
+    padding: 20px;
+}
+
+/* ... その他のコンテンツ固有のスタイルは省略 ... */

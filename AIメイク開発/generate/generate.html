@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI makeup</title>
+    <link rel="stylesheet" href="../main.css">
+</head>
+
+<body>
+    
+    <div id="header-placeholder"></div>
+
+    <div id="main-container">
+
+        <div id="panel-wrapper">
+
+            <div id="leftPanel" class="panel">
+
+                <h3>元となる画像を選択</h3>
+                <input type="file" id="uploadInputLeft" class="upload-input" accept="image/*">
+
+                <img id="previewImageLeft" class="preview-image" src="" alt="左プレビュー">
+
+            </div>
+
+            <div id="rightPanel" class="panel">
+
+                <h3>目標となる画像を選択</h3>
+                <input type="file" id="uploadInputRight" class="upload-input" accept="image/*">
+
+                <img id="previewImageRight" class="preview-image" src="" alt="右プレビュー">
+
+            </div>
+
+        </div>
+
+        <div class="edit-button-wrapper">
+            <a href="../edit/edit.html" id="editButton" class="edit-button">編集画面へ</a>
+        </div>
+
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../common.js"></script>
+
+    <script>
+        // HTMLファイルは generate/ フォルダにあるため、親ディレクトリ (../) を経由して includes フォルダ内のファイルを指定
+        includeHtml('header-placeholder', '../includes/header.html');
+        includeHtml('footer-placeholder', '../includes/footer.html');
+    </script>
+
+    <script src="home.js"></script> 
+    <script src="generate.js"></script>
+</body>
+
+</html>

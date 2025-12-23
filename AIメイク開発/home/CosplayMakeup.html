@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosplay AI make up</title>
+    <link rel="stylesheet" href="../main.css"> 
+</head>
+
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <div class="main-content-area">
+        <div class="cosplayer-image">
+            <img src="../コスプレイヤー画像/rI9jOaeH_400x400.jpg" alt="コスプレイヤーの画像">
+        </div>
+
+        <div class="text-and-button">
+            <div class="makeup-text">
+                メイク加工
+            </div>
+            <div class="edit-button">
+                <a href="../generate/generate.html">画像を生成する</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../common.js"></script>
+    
+    <script>
+        // HTMLファイルは home/ フォルダにあるため、親ディレクトリ (../) を経由して includes フォルダ内のファイルを指定
+        includeHtml('header-placeholder', '../includes/header.html');
+        includeHtml('footer-placeholder', '../includes/footer.html');
+    </script>
+    
+    <script src="home.js"></script> 
+
+</body>
+
+</html>
