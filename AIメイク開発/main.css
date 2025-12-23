@@ -538,3 +538,28 @@ footer {
 }
 
 /* ... その他のコンテンツ固有のスタイルは省略 ... */
+
+
+
+body {
+            /* 画面いっぱいの高さを確保 */
+            margin: 0;
+            height: 100vh; 
+            
+            /* Flexboxで中央寄せ */
+            display: flex;
+            justify-content: center; /* 左右の中央 */
+            align-items: center;     /* 上下の中央 */
+            
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .manual-box {
+            padding: 20px 40px;
+            background-color: white;
+            border: 2px solid #333;
+            border-radius: 8px;
+            font-size: 24px;
+            font-weight: bold;
+        }
