@@ -338,9 +338,8 @@ header {
   width: 100%;
   z-index: 1000; /* 他の要素の上に表示させる */
   font-family: 'Yu Gothic', sans-serif;
-  padding-right: 10px;
   align-items: center;    /* 垂直方向の中央寄せ */
-　padding: 10px 5% 10px 5%;/*上 右 下 左の余白*/
+  padding: 10px 5% 10px 5%;/*上 右 下 左の余白*/
 }
 
 /* ドロップダウンメニュー全体のスタイル */
