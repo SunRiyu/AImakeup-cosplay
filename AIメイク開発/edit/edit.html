@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メイク調整画面</title>
     <link rel="stylesheet" href="../main.css">
 </head>
+
 <body>
-    
+
     <div id="header-placeholder"></div>
-    
+
     <main class="content-wrapper">
         <div class="image-section">
-            <p class="image-label">生成した画像（仮）</p>
-            <img src="../コスプレイヤー画像/answer.png" alt="生成した画像">
+            <p class="image-label">肌領域の検出プレビュー</p>
+            <div style="position: relative; display: inline-block;">
+                <img id="targetImage" src="../コスプレイヤー画像/answer.png" alt="生成した画像"
+                    style="max-width: 500px; display: block;">
+                <canvas id="skinCanvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
+            </div>
         </div>
         <div class="adjustment-controls">
-            <p>ここにメイク調整のコントロールが入ります。</p>
-            <button>調整を適用</button>
+            <p>【無料ツール】画像から肌色を抽出します</p>
+            <button id="detectSkinBtn">肌の場所を特定する</button>
+            <p id="statusText" style="font-size: 0.9em; color: #666;">ボタンを押すと解析を開始します</p>
         </div>
     </main>
-
-    <div id="footer-placeholder"></div>
-
     <script src="../common.js"></script>
-    
+
     <script>
         // HTMLファイルは edit/ フォルダにあるため、親ディレクトリ (../) を経由して includes フォルダ内のファイルを指定
         includeHtml('header-placeholder', '../includes/header.html');
         includeHtml('footer-placeholder', '../includes/footer.html');
     </script>
-    
-    <script src="home.js"></script> 
+
+    <script src="home.js"></script>
     <script src="generate.js"></script>
+    <script src="edit.js"></script>
+    <script src="image.js"></script>
+    <script src="hair-definition.js"></script>
+
 </body>
+
 </html>
