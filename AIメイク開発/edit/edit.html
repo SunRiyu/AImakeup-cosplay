@@ -22,9 +22,12 @@
             </div>
         </div>
         <div class="adjustment-controls">
-            <p>【無料ツール】画像から肌色を抽出します</p>
-            <button id="detectSkinBtn">肌の場所を特定する</button>
-            <p id="statusText" style="font-size: 0.9em; color: #666;">ボタンを押すと解析を開始します</p>
+            <p>【画像解析ツール】</p>
+            <button onclick="detectEdges()">1. 境界線を抽出</button>
+            <button onclick="defineHairArea()">2. 髪の毛を定義</button>
+            <button onclick="detectSkin()">3. 肌を抽出</button>
+            <button onclick="colorHairBlack()">髪の毛を黒くする</button>
+            <p id="statusText">実行したい解析を選択してください</p>
         </div>
     </main>
     <script src="../common.js"></script>
@@ -40,7 +43,6 @@
     <script src="edit.js"></script>
     <script src="image.js"></script>
     <script src="hair-definition.js"></script>
-
 </body>
 
 </html>
