@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
 
     <main class="content-wrapper">
         <div class="image-section">
-            <p class="image-label">肌領域の検出プレビュー</p>
+            <p class="image-label">髪の毛領域の解析プレビュー</p>
             <div style="position: relative; display: inline-block;">
                 <img id="targetImage" src="../コスプレイヤー画像/answer.png" alt="生成した画像"
                     style="max-width: 500px; display: block;">
@@ -23,26 +23,23 @@
         </div>
         <div class="adjustment-controls">
             <p>【画像解析ツール】</p>
-            <button onclick="detectEdges()">1. 境界線を抽出</button>
-            <button onclick="defineHairArea()">2. 髪の毛を定義</button>
-            <button onclick="detectSkin()">3. 肌を抽出</button>
-            <button onclick="colorHairBlack()">髪の毛を黒くする</button>
-            <p id="statusText">実行したい解析を選択してください</p>
+            <button id="detectSkinBtn">髪の毛を判別して黒くする</button>
+            <p id="statusText">ボタンを押すと解析と加工を開始します</p>
         </div>
     </main>
+
     <script src="../common.js"></script>
 
     <script>
-        // HTMLファイルは edit/ フォルダにあるため、親ディレクトリ (../) を経由して includes フォルダ内のファイルを指定
+        // ヘッダーとフッターの読み込み
         includeHtml('header-placeholder', '../includes/header.html');
         includeHtml('footer-placeholder', '../includes/footer.html');
     </script>
 
     <script src="home.js"></script>
     <script src="generate.js"></script>
-    <script src="edit.js"></script>
-    <script src="image.js"></script>
-    <script src="hair-definition.js"></script>
+    <script src="hair-processor.js"></script>
+
 </body>
 
 </html>
