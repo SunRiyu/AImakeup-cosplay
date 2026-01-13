@@ -1,45 +1,66 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
+    <link rel="icon" href="data:,">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メイク調整画面</title>
     <link rel="stylesheet" href="../main.css">
+    <style>
+        /* 締切優先のため、不足している「鮮やかさ」と「レイアウト」をここで補強 */
+        .content-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            padding: 20px;
+            margin-top: 120px; /* ヘッダーとの重なり防止 */
+        }
+        .image-section {
+            flex: 1;
+            max-width: 500px;
+        }
+        .adjustment-controls {
+            flex: 1;
+            max-width: 350px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .color-chip:hover { border: 2px solid #000; }
+    </style>
 </head>
-
 <body>
-
     <div id="header-placeholder"></div>
 
     <main class="content-wrapper">
         <div class="image-section">
-            <p class="image-label">髪の毛領域の解析プレビュー</p>
-            <div style="position: relative; display: inline-block;">
-                <img id="targetImage" src="../コスプレイヤー画像/answer.png" alt="生成した画像"
-                    style="max-width: 500px; display: block;">
+            <p class="image-label">Before / After プレビュー</p>
+            <div style="position: relative;">
+                <img id="targetImage" src="../コスプレイヤー画像/answer.png" alt="生成した画像" style="width: 100%; display: block;">
                 <canvas id="skinCanvas" style="position: absolute; top: 0; left: 0; pointer-events: none;"></canvas>
             </div>
         </div>
+
         <div class="adjustment-controls">
-            <p>【画像解析ツール】</p>
-            <button id="detectSkinBtn">髪の毛を判別して黒くする</button>
-            <p id="statusText">ボタンを押すと解析と加工を開始します</p>
+            <h3>Lips カラー調整</h3>
+            <p>候補色を選択：</p>
+            <div id="colorPalette" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 20px;"></div>
+            
+            <label>明るさ：</label>
+            <input type="range" id="brightnessSlider" min="-4" max="4" step="2" value="0" style="width:100%;">
+            <button id="saveBtn" style="width:100%; margin-top:20px; padding:10px; background:#e91e63; color:white; border:none; border-radius:5px; cursor:pointer;">色を保存する</button>
+            <p id="statusText" style="margin-top:10px; font-size:0.9em; color:#666;">リップの色を選んでください</p>
         </div>
     </main>
 
-    <script src="../common.js"></script>
+    <div id="footer-placeholder"></div>
 
+    <script src="../common.js"></script>
     <script>
-        // ヘッダーとフッターの読み込み
         includeHtml('header-placeholder', '../includes/header.html');
         includeHtml('footer-placeholder', '../includes/footer.html');
     </script>
-
-    <script src="home.js"></script>
-    <script src="generate.js"></script>
-    <script src="hair-processor.js"></script>
-
+    <script src="edit.js"></script>
 </body>
-
 </html>

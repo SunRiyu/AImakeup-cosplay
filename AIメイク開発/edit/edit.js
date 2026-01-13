@@ -1,49 +1,88 @@
-document.getElementById('detectSkinBtn').addEventListener('click', function() {
-    const img = document.getElementById('targetImage');
-    const canvas = document.getElementById('skinCanvas');
-    const ctx = canvas.getContext('2d');
-    const status = document.getElementById('statusText');
+// edit.js
+const img = document.getElementById('targetImage');
+const canvas = document.getElementById('skinCanvas');
+const ctx = canvas.getContext('2d');
 
-    // Canvasのサイズを画像に合わせる
-    canvas.width = img.clientWidth;
-    canvas.height = img.clientHeight;
+// --- 変更点: lip_pathを格納する変数を用意 ---
+let lipPathPoints = []; 
 
-    // Canvasに画像を描画してピクセルデータを取得
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
+const lipColors = [
+    [255, 0, 0], [255, 102, 102], [204, 0, 0], [255, 51, 153], [255, 153, 204],
+    [120, 68, 200], [153, 51, 255], [102, 0, 204], [255, 102, 0], [255, 153, 102],
+    [204, 51, 0], [255, 204, 204], [153, 0, 51], [102, 0, 0], [51, 0, 0]
+];
+let selectedRGB = [...lipColors[5]]; 
 
-    status.innerText = "解析中...";
-
-    // ピクセルごとにループ（肌色の定義：簡易的なRGB/HSV判定）
-    for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];     // Red
-        const g = data[i + 1]; // Green
-        const b = data[i + 2]; // Blue
-
-        // 簡易的な肌色判定アルゴリズム (RGBベース)
-        if (isSkin(r, g, b)) {
-            // 肌と判定した場所を半透明の赤色で塗りつぶす（可視化用）
-            data[i] = 255;
-            data[i + 1] = 0;
-            data[i + 2] = 0;
-            data[i + 3] = 128; // 透明度
-        } else {
-            // 肌ではない場所は透明にする
-            data[i + 3] = 0;
-        }
+// --- 追加: lip_path.txt を読み込む処理 ---
+async function loadLipPath() {
+    try {
+        const response = await fetch('../../lip_path.txt');
+        if (!response.ok) throw new Error('File not found');
+        const text = await response.text();
+        lipPathPoints = text.trim().split('\n').map(line => {
+            const [x, y] = line.trim().split(/\s+/).map(Number);
+            return { x, y };
+        });
+        console.log("読み込み成功:", lipPathPoints.length, "個の座標");
+        updateLips(); 
+    } catch (error) {
+        console.error("読み込みエラー:", error);
     }
+}
 
-    // 解析結果を描画
-    ctx.putImageData(imageData, 0, 0);
-    status.innerText = "肌の検出が完了しました。";
+function updateLips() {
+    if (!img.complete || lipPathPoints.length === 0) return;
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // --- 【重要】倍率の計算 ---
+    // img.naturalWidth (元の画像サイズ) と img.width (画面表示サイズ) の比率を出す
+    const scaleX = img.width / img.naturalWidth;
+    const scaleY = img.height / img.naturalHeight;
+
+    const b = parseInt(document.getElementById('brightnessSlider').value) * 15;
+    const r = Math.min(255, Math.max(0, selectedRGB[0] + b));
+    const g = Math.min(255, Math.max(0, selectedRGB[1] + b));
+    const bl = Math.min(255, Math.max(0, selectedRGB[2] + b));
+
+    ctx.save();
+    ctx.beginPath();
+    
+    // 全ての座標に倍率をかけて描画
+    ctx.moveTo(lipPathPoints[0].x * scaleX, lipPathPoints[0].y * scaleY);
+    lipPathPoints.forEach(p => {
+        ctx.lineTo(p.x * scaleX, p.y * scaleY);
+    });
+    
+    ctx.closePath();
+
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = `rgba(${r}, ${g}, ${bl}, 0.5)`;
+    ctx.fillStyle = `rgba(${r}, ${g}, ${bl}, 0.6)`;
+    ctx.fill();
+    ctx.restore();
+
+    document.getElementById('statusText').innerText = `反映中: RGB(${r}, ${g}, ${bl})`;
+}
+
+// パレット生成（既存のまま）
+const palette = document.getElementById('colorPalette');
+palette.innerHTML = ''; 
+lipColors.forEach(rgb => {
+    const chip = document.createElement('div');
+    Object.assign(chip.style, {
+        width: '32px', height: '32px', backgroundColor: `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`,
+        borderRadius: '50%', cursor: 'pointer', border: '2px solid white',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.3)', display: 'inline-block', margin: '5px'
+    });
+    chip.onclick = () => { selectedRGB = rgb; updateLips(); };
+    palette.appendChild(chip);
 });
 
-// 肌色の定義関数
-function isSkin(r, g, b) {
-    // 一般的な肌色の範囲を定義（照明条件に左右されます）
-    const rGtG = r > g;
-    const rGtB = r > b;
-    const gGtB = g > b;
-    return (r > 95 && g > 40 && b > 20 && (Math.max(r, g, b) - Math.min(r, g, b) > 15) && Math.abs(r - g) > 15 && rGtG && rGtB);
-}
+img.onload = updateLips;
+document.getElementById('brightnessSlider').oninput = updateLips;
+
+// 起動時にロードを実行
+loadLipPath();
