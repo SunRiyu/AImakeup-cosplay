@@ -8,9 +8,14 @@ CORS(app)
 
 # --- 環境に合わせて修正してください ---
 # Fijiの本体がある場所
-FIJI_PATH = r"C:\Fiji.app\ImageJ-win64.exe" 
-# 先ほど作成したマクロの場所
-MACRO_PATH = r"C:\Users\yukim\AImakeup-cosplay\AutoLip.ijm" 
+# --- server.py のここを修正 ---
+
+# 1. Fijiの場所（ImageJ-win64.exe を右クリックして「パスをコピー」すると確実です）
+# 先頭に r を付けるのを忘れないでください
+FIJI_PATH = r"C:\Users\yukim\Desktop\Fiji.app\ImageJ-win64.exe" # ←実際のパスに！
+
+# 2. マクロの場所
+MACRO_PATH = r"C:\Users\yukim\AImakeup-cosplay\AutoLip.ijm" # ←実際のパスに！
 
 @app.route('/run_fiji', methods=['POST'])
 def run_fiji():
