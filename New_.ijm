@@ -1,54 +1,53 @@
 // ======================================================
-// メイク分析用自動計測マクロ（安定版）
+// 全自動リップ座標抽出マクロ (修正版)
 // ======================================================
 
-// 1. 設定項目（パスは必ず "" で囲み、最後にファイル名 .model を入れる）
-modelPath = "C:/Users/yukim/AImakeup-cosplay/cosplay_makeup.model"; 
+// パス設定（ここを自分のPC環境に合わせて再確認してください）
+modelPath = "C:/Users/yukim/AImakeup-cosplay/classifier.model"; 
 outputDir = "C:/Users/yukim/AImakeup-cosplay/"; 
 
-// 2. 準備
-run("Clear Results");
-inputName = getTitle();
-
-// 3. Weka Segmentationを実行してモデルをロード
+// Weka Segmentationの起動
 run("Trainable Weka Segmentation");
 wait(2000); // 起動待ち
-call("trainableSegmentation.Weka_Segmentation.loadClassifier", modelPath);
 
-// 4. 確率マップ生成を開始
-print("解析を開始します。これには時間がかかる場合があります...");
+// モデルのロード
+call("trainableSegmentation.Weka_Segmentation.loadClassifier", modelPath);
+print("Model loaded.");
+
+// 分析実行（確率マップの生成）
 call("trainableSegmentation.Weka_Segmentation.getProbability");
 
-// ★修正ポイント：Probability maps ウィンドウが出るまで最大60秒待機する
-i = 0;
-while (!isOpen("Probability maps") && i < 60) {
-    wait(1000);
-    i++;
+// 「Probability maps」ウィンドウが表示されるまでループで待機
+while (!isOpen("Probability maps")) {
+    wait(500);
+}
+print("Analysis finished.");
+
+// 唇のレイヤーを抽出
+selectWindow("Probability maps");
+// lipsがどのクラスかによって1か2か決まります。唇が赤く表示されるスライスを選んでください
+setSlice(2); 
+run("Duplicate...", "title=lip_mask");
+
+// 二値化（唇を白、背景を黒にする）
+setThreshold(0.5, 1.0); 
+run("Convert to Mask");
+
+// ノイズ除去（小さい点は無視する）
+run("Analyze Particles...", "size=500-Infinity show=Nothing add");
+
+// 座標の書き出し
+if (roiManager("count") > 0) {
+    roiManager("select", 0);
+    run("List Coordinates");
+    // ファイル名に元画像の名前を含めるように改良
+    origName = getTitle();
+    saveAs("Text", outputDir + "lip_path_" + origName + ".txt");
+    print("Coordinates saved for " + origName);
+} else {
+    print("Error: No lip area detected.");
 }
 
-if (!isOpen("Probability maps")) {
-    exit("エラー：解析がタイムアウトしました。手動で Get probability を押してみてください。");
-}
-
-// 5. 各パーツの計測
-probMapName = "Probability maps";
-labels = newArray("eyes", "lips", "eyebrows", "mouth", "hair", "backgrond");
-
-for (i = 0; i < labels.length; i++) {
-    selectWindow(probMapName);
-    setSlice(i + 1);
-    
-    run("Duplicate...", "title=temp_mask");
-    imageCalculator("Multiply create 32-bit", inputName, "temp_mask");
-    
-    run("Measure");
-    setResult("Part", nResults-1, labels[i]); // 結果の最後尾にラベルを追加
-    
-    close(); // Result of ...
-    selectWindow("temp_mask");
-    close();
-}
-
-// 6. 保存
-saveAs("Results", outputDir + inputName + "_analysis.csv");
-print("解析完了！保存先: " + outputDir + inputName + "_analysis.csv");
+// 整理
+run("Clear Results");
+roiManager("Delete");
