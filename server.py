@@ -12,7 +12,7 @@ CORS(app)
 
 # 1. Fijiの場所（ImageJ-win64.exe を右クリックして「パスをコピー」すると確実です）
 # 先頭に r を付けるのを忘れないでください
-FIJI_PATH = r"C:\Users\yukim\Desktop\Fiji.app\ImageJ-win64.exe" # ←実際のパスに！
+FIJI_PATH = r"C:\Users\yukim\fiji-windows-x64.exe"
 
 # 2. マクロの場所
 MACRO_PATH = r"C:\Users\yukim\AImakeup-cosplay\AutoLip.ijm" # ←実際のパスに！
@@ -20,23 +20,28 @@ MACRO_PATH = r"C:\Users\yukim\AImakeup-cosplay\AutoLip.ijm" # ←実際のパス
 @app.route('/run_fiji', methods=['POST'])
 def run_fiji():
     data = request.json
-    image_path = data.get('image_path')
-    
-    # パスの区切り文字をWindows形式に修正
-    image_path = image_path.replace('/', '\\')
+    image_path = data.get('image_path').replace('/', '\\')
 
-    if not os.path.exists(image_path):
-        return jsonify({"status": "error", "message": f"Image not found: {image_path}"}), 400
+    # --- どこで止まっているか診断する ---
+    if not os.path.exists(FIJI_PATH):
+        return jsonify({"status": "error", "message": f"Fiji本体が見つかりません。パスを確認してください: {FIJI_PATH}"}), 400
+    
+    if not os.path.exists(MACRO_PATH):
+        return jsonify({"status": "error", "message": f"マクロファイルが見つかりません。パスを確認してください: {MACRO_PATH}"}), 400
 
     try:
-        # Fijiを起動 (headlessモードでマクロを実行)
-        print(f"Fijiを起動中... 対象画像: {image_path}")
-        subprocess.run([FIJI_PATH, "--headless", "-macro", MACRO_PATH, image_path], check=True)
-        return jsonify({"status": "success", "message": "分析が完了しました"})
+        # コマンドをリスト形式で渡す（WinError 2 回避のため）
+        command = [FIJI_PATH, "--headless", "-macro", MACRO_PATH, image_path]
+        print(f"実行コマンド: {' '.join(command)}")
+        
+        subprocess.run(command, check=True)
+        return jsonify({"status": "success", "message": "分析に成功しました"})
+    
+    except subprocess.CalledProcessError as e:
+        return jsonify({"status": "error", "message": f"Fijiの実行中にエラーが発生しました: {e}"}), 500
     except Exception as e:
-        print(f"エラー発生: {str(e)}")
-        return jsonify({"status": "error", "message": str(e)}), 500
+        return jsonify({"status": "error", "message": f"システムエラー: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    print("Pythonサーバー起動中... ポート5000で待機しています。")
+    print("Pythonサーバー起動中...")
     app.run(port=5000)
